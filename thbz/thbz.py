@@ -18,6 +18,16 @@ def author():
 	print("@thbz__")
 	print("https://thbz.fr")
 
+__all__ = [
+	"str2bin",
+	"bin2str",
+	"str2hex",
+	"hex2str",
+	"str2b64",
+	"b642str",
+	"int2str",
+	"str2int"
+]
 
 ### CONVERSIONS ###
 
@@ -50,7 +60,7 @@ def int2str(number):
     return str(unhexlify(hex(number)[2:]))[2:-1]
 
 def str2int(string):
-	return int(binascii.hexlify(string.encode()), 16)
+	return int(hexlify(string.encode()), 16)
 
 
 ####################

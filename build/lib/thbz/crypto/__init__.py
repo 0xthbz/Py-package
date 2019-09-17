@@ -1,1 +1,1 @@
-from rsa import *
+import rsa
