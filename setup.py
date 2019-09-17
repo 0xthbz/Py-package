@@ -5,9 +5,8 @@ setup(
 	version="0",
 	packages=find_packages(),
 	description="Personal useful functions",
-	url="https://0xthbz.fr",
+	url="https://thbz.fr",
 	author="thbz",
 	license="WTFPL",
-	python_requires=">=3.5.6"
+	python_requires=">=3.6.8"
 )
-
