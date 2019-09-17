@@ -44,6 +44,7 @@ def flag_common_modulus(n1, n2, e1, e2, c1, c2):
     if not check_common_modulus(n1, n2, e1, e2):
         return False
 
+    n = n1
     u, v = bezout(e1, e2)
     return str(unhexlify(hex(((powmod(c1,u,n) * powmod(c2,v,n)) % n))[2:]))[2:-1]
 
