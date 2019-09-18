@@ -3,7 +3,6 @@
 
 from binascii import hexlify, unhexlify
 from base64 import b64encode, b64decode
-from datetime import datetime
 
 def author():
 	print("              _   _     _        ")
@@ -32,6 +31,7 @@ __all__ = [
 ### CONVERSIONS ###
 
 def str2bin(string):
+	""" Converts a plain string (string) to a binary sequence (string) """
 	converted = ""
 	for x in string:
 		byt = str(bin(ord(x)))[2:]
@@ -42,24 +42,31 @@ def str2bin(string):
 	return converted
 
 def bin2str(binary):
+	""" Converts a binary sequence (string) to a plain string (string) """
 	return ''.join(chr(int(binary[i:i+8], 2)) for i in range(0, len(binary), 8))
 
 def str2hex(string):
+	""" Converts a plain string (string) to a hexadecimal sequence (string) """
 	return str(hexlify(string.encode()))[2:-1]
 
 def hex2str(hexa):
+	""" Converts a hexadecimal sequence (string) to a plain string (string) """
 	return str(unhexlify(hexa))[2:-1]
 
 def str2b64(string):
+	""" Converts a plain string (string) to a base64 sequence (string) """
 	return str(b64encode(string.encode()))[2:-1]
 
 def b642str(b64):
+	""" Converts a base64 sequence (string) to a plain string (string) """
 	return str(b64decode(b64))[2:-1]
 
 def int2str(number):
-    return str(unhexlify(hex(number)[2:]))[2:-1]
+	""" Converts an integer (int) to a plain string (string) """
+	return str(unhexlify(hex(number)[2:]))[2:-1]
 
 def str2int(string):
+	""" Converts a plain string (string) to an integer (int) """
 	return int(hexlify(string.encode()), 16)
 
 
