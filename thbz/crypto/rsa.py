@@ -11,7 +11,7 @@ from binascii import hexlify, unhexlify
 
 from Crypto.PublicKey import RSA
 from Crypto.Util.number import GCD
-from gmpy2 import get_context, invert, powmod, sqrt
+from gmpy2 import get_context, invert, powmod, root, sqrt
 from sympy.solvers import solve
 from sympy import Symbol
 
@@ -36,6 +36,7 @@ def main():
 __all__ = [
     "CommonModulus",
     "Facto",
+    "MultipleReceivers",
     "Wiener",
     "bezout",
     "load_pk",
@@ -86,6 +87,43 @@ class Facto:
             self.phi = (self.p-1)*(self.q-1)
             self.d = bezout(self.e, self.phi)[0]
             self.m = pow(self.c,self.d,self.n)
+
+class MultipleReceivers:
+    def __init__(self, e, messages_list):
+        """
+            Example with e = 3, messages_list should be:
+            [
+                [n1, c1],
+                [n2, c2],
+                [n3, c3],
+            ]
+        """
+
+        self.e = e
+        self.N = None
+        self.m = None
+
+        if len(messages_list) != e:
+            return False
+
+        for i in range(e):
+            if self.N == None:
+                self.N = messages_list[i][0]
+            else:
+                self.N *= messages_list[i][0]
+
+        for i in range(e):
+            ni = messages_list[i][0]
+            ci = messages_list[i][1]
+            Ni = self.N//ni
+            ui = invert(Ni, ni)
+
+            if self.m == None:
+                self.m = ci*ui*Ni
+            else:
+                self.m += ci*ui*Ni
+
+        self.m = int(root(self.m % self.N, 3))
 
 class Wiener:
     def __init__(self, n, e):
@@ -187,7 +225,7 @@ def bezout(e, phi):
             return 0,0,0
         return abs(a),-1 if a<0 else 1,0
     a, sa = abs(a), -1 if a<0 else 1
-    b, sb = abs(b), -1if b<0 else 1
+    b, sb = abs(b), -1 if b<0 else 1
     vv, uu, v, u = 1,0,0,1
     e=1
     q, rr = divmod(a, b)
